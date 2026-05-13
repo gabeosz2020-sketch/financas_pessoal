@@ -1,9 +1,8 @@
-package com.controle.financas.pessoal.entity;
+package com.controle.financas.pessoal.model;
 
 import com.controle.financas.pessoal.enums.TipoTransacao;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 
 @Entity
 public class Transacao {
@@ -12,7 +11,7 @@ public class Transacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
-    private BigDecimal valor;
+    private Double valor;
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipo;
 
@@ -20,7 +19,7 @@ public class Transacao {
     }
 
     // Construtor
-    public Transacao(String descricao, BigDecimal valor, TipoTransacao tipo) {
+    public Transacao(String descricao, Double valor, TipoTransacao tipo) {
         this.descricao = descricao;
         this.valor = valor;
         this.tipo = tipo;
@@ -34,7 +33,7 @@ public class Transacao {
         return descricao;
     }
 
-    public BigDecimal getValor() {
+    public Double getValor() {
         return valor;
     }
 
@@ -42,7 +41,7 @@ public class Transacao {
         return tipo;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
