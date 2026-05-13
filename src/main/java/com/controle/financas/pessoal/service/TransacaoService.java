@@ -4,6 +4,8 @@ import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.repository.TransacaoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TransacaoService {
 
@@ -16,5 +18,9 @@ public class TransacaoService {
     public Transacao criarTransacao(Transacao transacao){
         System.out.println(transacao);
         return repository.save(transacao);
+    }
+
+    public List<Transacao> listarTransacoes(){
+    return repository.findAll();
     }
 }

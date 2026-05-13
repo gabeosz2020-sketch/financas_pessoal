@@ -4,6 +4,8 @@ import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.service.TransacaoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/transacoes")
 public class TransacaoControler {
@@ -19,4 +21,8 @@ public class TransacaoControler {
         return service.criarTransacao(transacao);
     }
 
+    @GetMapping
+    public List<Transacao> listarTransacoes(){
+        return service.listarTransacoes();
+    }
 }
