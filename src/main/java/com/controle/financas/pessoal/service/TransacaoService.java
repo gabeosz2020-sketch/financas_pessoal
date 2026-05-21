@@ -1,9 +1,11 @@
 package com.controle.financas.pessoal.service;
 
+import com.controle.financas.pessoal.enums.TipoTransacao;
 import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.repository.TransacaoRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -22,5 +24,24 @@ public class TransacaoService {
 
     public List<Transacao> listarTransacoes(){
     return repository.findAll();
+    }
+
+    public BigDecimal calcularSaldo(){
+        BigDecimal saldo = BigDecimal.ZERO;
+
+        for (Transacao t : repository.findAll()) {
+
+            if (t.getTipo() == TipoTransacao.RECEITA ){
+                saldo = saldo.add(t.getValor());
+
+            } else if (t.getTipo() == TipoTransacao.DESPESA) {
+                saldo = saldo.subtract(t.getValor());
+            }
+        }
+        return saldo;
+    }
+
+    public Transacao buscarPorId(Long id){
+        return repository.findById(id).orElse(null);
     }
 }
