@@ -2,7 +2,6 @@ package com.controle.financas.pessoal.controller;
 
 import com.controle.financas.pessoal.DTO.SaldoResponse;
 import com.controle.financas.pessoal.model.Transacao;
-import com.controle.financas.pessoal.repository.TransacaoRepository;
 import com.controle.financas.pessoal.service.TransacaoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,5 +48,10 @@ public class TransacaoControler {
     @GetMapping("/{id}")
     public Transacao pesquisarPorId(@PathVariable("id") Long id ){
         return service.buscarPorId(id);
+    }
+
+    @PutMapping("/{id}")
+    public Transacao atualizar(@PathVariable Long id, @RequestBody Transacao transacao){
+        return service.atualizarTransacao(id, transacao);
     }
 }

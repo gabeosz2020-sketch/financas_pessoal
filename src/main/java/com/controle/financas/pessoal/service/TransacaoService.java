@@ -44,4 +44,15 @@ public class TransacaoService {
     public Transacao buscarPorId(Long id){
         return repository.findById(id).orElse(null);
     }
+
+    public Transacao atualizarTransacao(Long id, Transacao novaTransacao){
+       Transacao transacaoExistente = repository.findById(id)
+               .orElseThrow(()->
+                       new RuntimeException("Transação não encontrada"));
+
+       transacaoExistente.setDescricao(novaTransacao.getDescricao());
+       transacaoExistente.setValor(novaTransacao.getValor());
+       transacaoExistente.setTipo(novaTransacao.getTipo());
+       return repository.save(transacaoExistente);
+    }
 }
