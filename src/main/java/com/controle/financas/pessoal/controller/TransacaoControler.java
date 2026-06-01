@@ -54,4 +54,9 @@ public class TransacaoControler {
     public Transacao atualizar(@PathVariable Long id, @RequestBody Transacao transacao){
         return service.atualizarTransacao(id, transacao);
     }
+
+    @DeleteMapping("/{id}")
+    public Transacao deletar(@PathVariable Long id){
+       return service.deletarTransacao(id);
+    }
 }

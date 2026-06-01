@@ -55,4 +55,14 @@ public class TransacaoService {
        transacaoExistente.setTipo(novaTransacao.getTipo());
        return repository.save(transacaoExistente);
     }
+
+    public Transacao deletarTransacao(Long id){
+        Transacao transacao = repository.findById(id)
+                        .orElseThrow(()->
+                                new RuntimeException("Transação não encontrada"));
+
+        repository.deleteById(id);
+
+        return transacao;
+    }
 }
