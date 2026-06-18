@@ -31,10 +31,10 @@ public class TransacaoService {
 
         for (Transacao t : repository.findAll()) {
 
-            if (t.getTipo() == TipoTransacao.RECEITA ){
+            if (t.getTipo().isReceita() ){
                 saldo = saldo.add(t.getValor());
 
-            } else if (t.getTipo() == TipoTransacao.DESPESA) {
+            } else if (t.getTipo().isDespesa()) {
                 saldo = saldo.subtract(t.getValor());
             }
         }
