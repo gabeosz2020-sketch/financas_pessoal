@@ -1,6 +1,6 @@
 package com.controle.financas.pessoal.service;
 
-import com.controle.financas.pessoal.enums.TipoTransacao;
+import com.controle.financas.pessoal.exception.TransacaoNaoEncontradaException;
 import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.repository.TransacaoRepository;
 import org.springframework.stereotype.Service;
@@ -42,13 +42,15 @@ public class TransacaoService {
     }
 
     public Transacao buscarPorId(Long id){
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new TransacaoNaoEncontradaException(id));
     }
 
     public Transacao atualizarTransacao(Long id, Transacao novaTransacao){
        Transacao transacaoExistente = repository.findById(id)
                .orElseThrow(()->
-                       new RuntimeException("Transação não encontrada"));
+                       new TransacaoNaoEncontradaException(id));
 
        transacaoExistente.setDescricao(novaTransacao.getDescricao());
        transacaoExistente.setValor(novaTransacao.getValor());
@@ -58,8 +60,8 @@ public class TransacaoService {
 
     public Transacao deletarTransacao(Long id){
         Transacao transacao = repository.findById(id)
-                        .orElseThrow(()->
-                                new RuntimeException("Transação não encontrada"));
+                .orElseThrow(() ->
+                        new TransacaoNaoEncontradaException(id));
 
         repository.deleteById(id);
 
