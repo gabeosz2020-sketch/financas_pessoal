@@ -3,9 +3,13 @@ package com.controle.financas.pessoal.controller;
 import com.controle.financas.pessoal.DTO.SaldoResponse;
 import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.service.TransacaoService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -21,8 +25,17 @@ public class TransacaoControler {
     }
 
     @PostMapping
-    public Transacao criarTransacao(@RequestBody Transacao transacao) {
-        return service.criarTransacao(transacao);
+    public ResponseEntity <Transacao> criarTransacao(@RequestBody @Valid Transacao transacao) {
+        Transacao novaTransacao = service.criarTransacao(transacao);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(novaTransacao.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(novaTransacao);
+
     }
 
     @GetMapping
