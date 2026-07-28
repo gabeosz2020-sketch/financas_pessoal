@@ -25,7 +25,7 @@ public class TransacaoControler {
     }
 
     @PostMapping
-    public ResponseEntity <Transacao> criarTransacao(@RequestBody @Valid Transacao transacao) {
+    public ResponseEntity<Transacao> criarTransacao(@RequestBody @Valid Transacao transacao) {
         Transacao novaTransacao = service.criarTransacao(transacao);
 
         URI location = ServletUriComponentsBuilder
@@ -64,13 +64,14 @@ public class TransacaoControler {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity <Transacao> atualizar(@PathVariable Long id, @RequestBody @Valid Transacao transacao){
+    public ResponseEntity<Transacao> atualizar(@PathVariable Long id, @RequestBody @Valid Transacao transacao){
         Transacao transacaoAtualizada = service.atualizarTransacao(id, transacao);
         return ResponseEntity.ok(transacaoAtualizada);
     }
 
     @DeleteMapping("/{id}")
-    public Transacao deletar(@PathVariable Long id){
-       return service.deletarTransacao(id);
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+       service.deletarTransacao(id);
+       return ResponseEntity.noContent().build();
     }
 }
