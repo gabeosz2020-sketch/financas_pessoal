@@ -64,8 +64,9 @@ public class TransacaoControler {
     }
 
     @PutMapping("/{id}")
-    public Transacao atualizar(@PathVariable Long id, @RequestBody Transacao transacao){
-        return service.atualizarTransacao(id, transacao);
+    public ResponseEntity <Transacao> atualizar(@PathVariable Long id, @RequestBody @Valid Transacao transacao){
+        Transacao transacaoAtualizada = service.atualizarTransacao(id, transacao);
+        return ResponseEntity.ok(transacaoAtualizada);
     }
 
     @DeleteMapping("/{id}")

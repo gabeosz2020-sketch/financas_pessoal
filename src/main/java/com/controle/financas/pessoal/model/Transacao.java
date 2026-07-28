@@ -30,7 +30,6 @@ public class Transacao {
     public Transacao() {
     }
 
-    // Construtor
     public Transacao(String descricao, BigDecimal valor, TipoTransacao tipo) {
         this.descricao = descricao;
         this.valor = valor;
