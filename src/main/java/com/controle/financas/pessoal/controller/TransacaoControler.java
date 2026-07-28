@@ -59,8 +59,9 @@ public class TransacaoControler {
     }
 
     @GetMapping("/{id}")
-    public Transacao pesquisarPorId(@PathVariable("id") Long id ){
-        return service.buscarPorId(id);
+    public ResponseEntity<Transacao> pesquisarPorId(@PathVariable("id") Long id ){
+        Transacao transacao = service.buscarPorId(id);
+        return ResponseEntity.ok(transacao);
     }
 
     @PutMapping("/{id}")
