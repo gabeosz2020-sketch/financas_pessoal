@@ -1,6 +1,7 @@
 package com.controle.financas.pessoal.controller;
 
 import com.controle.financas.pessoal.DTO.SaldoResponse;
+import com.controle.financas.pessoal.DTO.TransacaoRequestDTO;
 import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.service.TransacaoService;
 import jakarta.validation.Valid;
@@ -25,7 +26,12 @@ public class TransacaoControler {
     }
 
     @PostMapping
-    public ResponseEntity <Transacao> criarTransacao(@RequestBody @Valid Transacao transacao) {
+    public ResponseEntity<Transacao> criarTransacao(@RequestBody @Valid TransacaoRequestDTO dto) {
+        Transacao transacao = new Transacao();
+        transacao.setDescricao(dto.getDescricao());
+        transacao.setValor(dto.getValor());
+        transacao.setTipo(dto.getTipo());
+
         Transacao novaTransacao = service.criarTransacao(transacao);
 
         URI location = ServletUriComponentsBuilder
@@ -59,17 +65,25 @@ public class TransacaoControler {
     }
 
     @GetMapping("/{id}")
-    public Transacao pesquisarPorId(@PathVariable("id") Long id ){
-        return service.buscarPorId(id);
+    public ResponseEntity<Transacao> pesquisarPorId(@PathVariable("id") Long id ){
+        Transacao transacao = service.buscarPorId(id);
+        return ResponseEntity.ok(transacao);
     }
 
     @PutMapping("/{id}")
-    public Transacao atualizar(@PathVariable Long id, @RequestBody Transacao transacao){
-        return service.atualizarTransacao(id, transacao);
+    public ResponseEntity<Transacao> atualizar(@PathVariable Long id, @RequestBody @Valid TransacaoRequestDTO dto){
+        Transacao transacao = new Transacao();
+        transacao.setDescricao(dto.getDescricao());
+        transacao.setValor(dto.getValor());
+        transacao.setTipo(dto.getTipo());
+
+        Transacao transacaoAtualizada = service.atualizarTransacao(id, transacao);
+        return ResponseEntity.ok(transacaoAtualizada);
     }
 
     @DeleteMapping("/{id}")
-    public Transacao deletar(@PathVariable Long id){
-       return service.deletarTransacao(id);
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+       service.deletarTransacao(id);
+       return ResponseEntity.noContent().build();
     }
 }
