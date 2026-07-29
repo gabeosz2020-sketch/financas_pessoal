@@ -71,7 +71,12 @@ public class TransacaoControler {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Transacao> atualizar(@PathVariable Long id, @RequestBody @Valid Transacao transacao){
+    public ResponseEntity<Transacao> atualizar(@PathVariable Long id, @RequestBody @Valid TransacaoRequestDTO dto){
+        Transacao transacao = new Transacao();
+        transacao.setDescricao(dto.getDescricao());
+        transacao.setValor(dto.getValor());
+        transacao.setTipo(dto.getTipo());
+
         Transacao transacaoAtualizada = service.atualizarTransacao(id, transacao);
         return ResponseEntity.ok(transacaoAtualizada);
     }
