@@ -64,9 +64,4 @@ public class Transacao {
         this.tipo = tipo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-
-    }
-
 }

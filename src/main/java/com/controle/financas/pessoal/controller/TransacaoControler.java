@@ -1,6 +1,7 @@
 package com.controle.financas.pessoal.controller;
 
 import com.controle.financas.pessoal.DTO.SaldoResponse;
+import com.controle.financas.pessoal.DTO.TransacaoRequestDTO;
 import com.controle.financas.pessoal.model.Transacao;
 import com.controle.financas.pessoal.service.TransacaoService;
 import jakarta.validation.Valid;
@@ -25,7 +26,12 @@ public class TransacaoControler {
     }
 
     @PostMapping
-    public ResponseEntity<Transacao> criarTransacao(@RequestBody @Valid Transacao transacao) {
+    public ResponseEntity<Transacao> criarTransacao(@RequestBody @Valid TransacaoRequestDTO dto) {
+        Transacao transacao = new Transacao();
+        transacao.setDescricao(dto.getDescricao());
+        transacao.setValor(dto.getValor());
+        transacao.setTipo(dto.getTipo());
+
         Transacao novaTransacao = service.criarTransacao(transacao);
 
         URI location = ServletUriComponentsBuilder
